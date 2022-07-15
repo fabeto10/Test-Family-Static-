@@ -9,11 +9,10 @@ update this file to implement the following already declared methods:
 from random import randint
 
 class FamilyStructure:
-    def __init__(self, last_name):
+    def __init__(self, last_name, members):
         self.last_name = last_name
-
-        # example list of members
-        self._members = []
+        for member  in members:
+            self.add_member(member)
 
     # read-only: Use this method to generate random members ID's when adding members into the list
     def _generateId(self):
@@ -21,16 +20,30 @@ class FamilyStructure:
 
     def add_member(self, member):
         # fill this method and update the return
-        pass
+        if 'id' not in member or member['id'] < 1:
+            member['id'] = self._generateId()
+        if not hasattr(self, "_members"):
+            self._members =[]
+        self._members.append(member)
 
-    def delete_member(self, id):
+    def get_member(self, member):
+        value = False
+        for aux in self._members: 
+            if aux['id']==member:
+                value = aux
+                break
+        return value
+
+    def delete_member(self, member):
         # fill this method and update the return
-        pass
+        for i in range(len(self._members)):
+            if self._members[i-1]['id'] == member:
+                del self._members[i-1]
+        if(self.get_member(id)):
+            return {"done": False}
+        return {"done": True}
+        
 
-    def get_member(self, id):
-        # fill this method and update the return
-        pass
-
-    # this method is done, it returns a list with all the family members
+    # this method is done, it returns a list with all the family 
     def get_all_members(self):
         return self._members
